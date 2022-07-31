@@ -7,6 +7,14 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/NotesApp.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/NotesApp.app.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/NotesApp.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/NotesApp.app.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/NotesApp.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/NotesApp.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-336621346/NotesApp.react-native-async-storage_async-storage.iml" filepath="$PROJECT_DIR$/.idea/modules/-336621346/NotesApp.react-native-async-storage_async-storage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-336621346/NotesApp.react-native-async-storage_async-storage.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/-336621346/NotesApp.react-native-async-storage_async-storage.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-336621346/NotesApp.react-native-async-storage_async-storage.main.iml" filepath="$PROJECT_DIR$/.idea/modules/-336621346/NotesApp.react-native-async-storage_async-storage.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-336621346/NotesApp.react-native-async-storage_async-storage.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/-336621346/NotesApp.react-native-async-storage_async-storage.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1847576848/NotesApp.react-native-default-preference.iml" filepath="$PROJECT_DIR$/.idea/modules/1847576848/NotesApp.react-native-default-preference.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1847576848/NotesApp.react-native-default-preference.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/1847576848/NotesApp.react-native-default-preference.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1847576848/NotesApp.react-native-default-preference.main.iml" filepath="$PROJECT_DIR$/.idea/modules/1847576848/NotesApp.react-native-default-preference.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1847576848/NotesApp.react-native-default-preference.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/1847576848/NotesApp.react-native-default-preference.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-2058027532/react-native-gradle-plugin.iml" filepath="$PROJECT_DIR$/.idea/modules/-2058027532/react-native-gradle-plugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-2058027532/react-native-gradle-plugin.main.iml" filepath="$PROJECT_DIR$/.idea/modules/-2058027532/react-native-gradle-plugin.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-2058027532/react-native-gradle-plugin.test.iml" filepath="$PROJECT_DIR$/.idea/modules/-2058027532/react-native-gradle-plugin.test.iml" />

@@ -15,7 +15,6 @@ interface IProps {
 
 const Create = ({ modalVisible, setModalVisible, setList, list }: IProps) => {
     const [heading, setHeading] = useState<string>("")
-    const [date, setDate] = useState<Date>(new Date())
     const [description, setDescription] = useState<string>("")
 
     const createNote = (heading: string, description: string)=> {
@@ -25,7 +24,7 @@ const Create = ({ modalVisible, setModalVisible, setList, list }: IProps) => {
                 heading,
                 description,
                 pinnedAt: "",
-                createdAt: new Date(new Date()).toLocaleString(),
+                createdAt: new Date(new Date()).toISOString(),
             })
             setList(arrCopy)
             setModalVisible(false)
@@ -65,7 +64,7 @@ const Create = ({ modalVisible, setModalVisible, setList, list }: IProps) => {
                                 placeholder="Enter description..."
                             />
                             <Pressable onPress={() => createNote(heading, description)}>
-                                <Text style={styles.heading}>Submit</Text>
+                                <Text style={styles.heading}>Add</Text>
                             </Pressable>
                         </View>
                     </View>

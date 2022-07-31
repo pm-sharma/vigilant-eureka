@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Alert, Image, Modal, Pressable, SafeAreaView,
     ScrollView, StyleSheet,
     Text, TextInput, View
 } from 'react-native';
+import { useDebounce } from '../hooks/useDebounce';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface IProps {
     editMode: boolean,
@@ -16,19 +18,46 @@ interface IProps {
 
 const Edit = ({ editMode, setEditMode, editState, setList,list }: IProps) => {
     const [heading, setHeading] = useState<string>(editState.heading)
-    const [date, setDate] = useState<Date>(new Date())
     const [description, setDescription] = useState<string>(editState.description)
+    const debouncedEditHead = useDebounce(heading, 10000);
+    const debouncedEditDesc = useDebounce(description, 10000);
 
     const editNote = (heading: string, description: string)=> {
         if(heading && description){
             const arrCopy = [...list]
-            arrCopy[editState.ind].heading = heading
-            arrCopy[editState.ind].description = description
+            arrCopy[editState?.ind].heading = heading
+            arrCopy[editState?.ind].description = description
             setList(arrCopy)
             setEditMode(false)
+            removeMode()
         }
     }
+
     const today = new Date(Date.now());
+
+    useEffect(() => {
+        editNote(debouncedEditHead,debouncedEditDesc)
+    },[debouncedEditDesc,debouncedEditHead])
+
+    useEffect(()=>{
+        setMode()
+    }, [])
+
+    const setMode = async() => {
+        try{
+            await AsyncStorage.setItem('edit', JSON.stringify(editState));
+        }catch{
+
+        }
+    }
+
+    const removeMode = async() => {
+        try{
+            await AsyncStorage.removeItem('edit');
+        }catch{
+
+        }
+    }
 
     return (
         <SafeAreaView style={styles.background}>
@@ -62,9 +91,9 @@ const Edit = ({ editMode, setEditMode, editState, setList,list }: IProps) => {
                                 value={description}
                                 placeholder="Enter description..."
                             />
-                            <Pressable onPress={() => editNote(heading, description)}>
+                            {/* <Pressable onPress={() => editNote(heading, description)}>
                                 <Text style={styles.heading}>Update</Text>
-                            </Pressable>
+                            </Pressable> */}
                         </View>
                     </View>
                     

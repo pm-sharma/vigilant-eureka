@@ -7,8 +7,6 @@ import {
 const data = require('../Integration/data.json') 
 
 const Delete = () => {
-    const [searchText, setSearchText] = useState("")
-    const [modalVisible, setModalVisible] = useState(false);
     
     return (
         <SafeAreaView style={styles.background}>

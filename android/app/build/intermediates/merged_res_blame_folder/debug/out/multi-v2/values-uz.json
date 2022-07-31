@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/purushottamsharma/NotesApp/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-uz/values-uz.xml",
+            "outputFile": "/Users/purushottamsharma/vigilant-eureka/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-uz/values-uz.xml",
             "map": [
                 {
                     "source": "/Users/purushottamsharma/.gradle/caches/transforms-3/a5da391e889210c4d2ba1ae6744f6033/transformed/appcompat-1.4.1/res/values-uz/values-uz.xml",

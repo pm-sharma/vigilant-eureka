@@ -14,25 +14,26 @@ import Edit from '../Crud/Edit';
 const Home = () => {
     const [searchText, setSearchText] = useState("")
     const [modalVisible, setModalVisible] = useState(false);
-    const [editState, setEditState] = useState<{heading: string, description: string, ind: number}>({
+    const [editState, setEditState] = useState<{ heading: string, description: string, ind: number }>({
         heading: "",
         description: "",
         ind: 0
     })
+
     const [editMode, setEditMode] = useState(false);
-    const [list, setList] = useState<{heading: string, description: string, createdAt: string, pinnedAt: string}[]>([])
-    const [filterList, setFilterList] = useState<{heading: string, description: string, createdAt: string, pinnedAt: string}[]>([])
+    const [list, setList] = useState<{ heading: string, description: string, createdAt: string, pinnedAt: string }[]>([])
+    const [filterList, setFilterList] = useState<{ heading: string, description: string, createdAt: string, pinnedAt: string }[]>([])
 
 
-    const searchInList = (searchText: string) =>{
-        if(searchText === ""){setFilterList(list);return}
+    const searchInList = (searchText: string) => {
+        if (searchText === "") { setFilterList(list); return }
         const res = filterList.filter(obj => Object.values(obj)?.some(val => val?.toLowerCase()?.includes(searchText?.toLowerCase())));
         setFilterList(res);
     }
 
-    const storeData = async() => {
+    const storeData = async () => {
         try {
-            if(list.length > 0) {
+            if (list.length > 0) {
                 await AsyncStorage.setItem('notes', JSON.stringify(list));
             }
         } catch (error) {
@@ -42,14 +43,43 @@ const Home = () => {
 
     useEffect(() => {
         setFilterList(list)
-        storeData();
-    },[list])
+        if(list.length > 0){
+            storeData();
+        }
+    }, [list])
 
     const getData = async () => {
         try {
             const myArray = await AsyncStorage.getItem('notes');
             if (myArray !== null) {
-                setList(JSON.parse(myArray));
+                const arr = JSON.parse(myArray)
+                arr.forEach((val: any, ind: number) => {
+                    if (val.pinnedAt == "") {
+                        arr.push(...arr.splice(ind, 1))
+                    }
+                })
+                arr.sort((a: any, b: any) => {
+                    if(a.pinnedAt == "" && b.pinnedAt == "") {
+                        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+                    }else if(a.pinnedAt != "" && b.pinnedAt != ""){
+                        return new Date(b.pinnedAt).getTime() - new Date(a.pinnedAt).getTime();
+                    }
+                });
+                setList(arr);
+            }
+        } catch (error) {
+            // Error retrieving data
+        }
+    }
+
+
+    const checkPreviousPendingAction = async () => {
+        try {
+            const action = await AsyncStorage.getItem('edit');
+            if (action !== null && JSON.parse(action).heading) {
+                setEditState(JSON.parse(action))
+            } else {
+                removeMode()
             }
         } catch (error) {
             // Error retrieving data
@@ -58,12 +88,35 @@ const Home = () => {
 
     useEffect(() => {
         getData()
+        checkPreviousPendingAction()
     }, [])
+
+    useEffect(() => {
+        getData()
+        checkPreviousPendingAction()
+    }, [])
+
+    useEffect(() => {
+        if(editState.heading != ""){
+            // setEditMode(true)
+        }
+        // if (Object.entries(editState).filter(([k, v], i) => !!v)?.length == Object.entries(editState)?.length) {
+        // }
+    }, [editState])
+
+
+    const removeMode = async () => {
+        try {
+            await AsyncStorage.removeItem('edit');
+        } catch {
+
+        }
+    }
 
 
     const pinNotes = (ind: number) => {
         const arrCopy = [...list]
-        arrCopy[ind]['pinnedAt'] = new Date(new Date()).toLocaleString()
+        arrCopy[ind]['pinnedAt'] = new Date(new Date()).toISOString()
         setList(arrCopy)
     }
 
@@ -73,32 +126,33 @@ const Home = () => {
                 <View>
                     <TextInput
                         style={styles.input}
-                        onChangeText={(text)=>{searchInList(text);setSearchText(text)}}
+                        onChangeText={(text) => { searchInList(text); setSearchText(text) }}
                         value={searchText}
                         placeholder="Search notes..."
                     />
                 </View>
-                
+
                 <View style={styles.flexRow}>
-                    {filterList?.map((val: any, ind: number)=>{
+                    {filterList?.map((val: any, ind: number) => {
                         return (
                             <ScrollView key={ind} style={styles.card}>
                                 <View>
-                                    <TouchableOpacity onPress={()=>{pinNotes(ind)}}>
+                                    <TouchableOpacity onPress={() => { pinNotes(ind) }}>
                                         <Image style={styles.pinnedImage} source={require('../../../assets/pinned.png')} />
                                     </TouchableOpacity>
-                                    <Pressable onPress={()=>{setEditState({description: val.description, heading: val.heading, ind: ind});setEditMode(true)}}>
+                                    <Pressable onPress={() => { setEditState({ description: val?.description, heading: val?.heading, ind: ind }); setEditMode(true) }}>
                                         <Text style={styles.heading}>{val.heading}</Text>
                                     </Pressable>
-                                        <Text style={styles.description}>{val.description}</Text>
+                                    <Text style={styles.description}>{val.description}</Text>
                                 </View>
                             </ScrollView>
-                    )})}
+                        )
+                    })}
                 </View>
             </ScrollView>
-            {editMode && <Edit editState={editState} editMode={editMode} setEditMode={(val: boolean) => {setEditMode(val)}}  list={list} setList={setList} />}
-            {modalVisible && <Create modalVisible={modalVisible} setModalVisible={(val: boolean) => {setModalVisible(val)}} list={list} setList={setList}/>}
-            <Pressable onPress={()=>{setModalVisible(!modalVisible)}}>
+            {editMode && <Edit editState={editState} editMode={editMode} setEditMode={(val: boolean) => { setEditMode(val) }} list={list} setList={setList} />}
+            {modalVisible && <Create modalVisible={modalVisible} setModalVisible={(val: boolean) => { setModalVisible(val) }} list={list} setList={setList} />}
+            <Pressable onPress={() => { setModalVisible(!modalVisible) }}>
                 <Image style={styles.createImage} source={require('../../../assets/plus.png')} />
             </Pressable>
         </SafeAreaView>
